@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Edit demo {{demo}}</h2>
+    <form action="#!" method="POST">
+        {% csrf_token %}
+        <p>
+            
+            {{form.name}}
+        </p>
+        <p>
+
+            {{form.some_datetime}}
+            As you can see, the value for this input is in romanian format, not ISO, so the field is "empty"
+            <br>
+            From chrome console:
+            <br>
+            The specified value "25.01.2024, 14:21" does not conform to the required format.  The format is "yyyy-MM-ddThh:mm" followed by optional ":ss" or ":ss.SSS".
+            <br>
+            Setting DATETIME_INPUT_FORMATS in settings.py doesn't do anything because USE_L10N is always True. You have to override <strong>formats.py</strong>
+        </p>
+        
+        <button type="submit">Submit</button>
+    </form>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
